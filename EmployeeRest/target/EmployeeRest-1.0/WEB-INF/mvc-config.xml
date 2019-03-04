@@ -2,7 +2,7 @@
 
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:aop="http://www.springframework.org/schema/aop"  
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:p="http://www.springframework.org/schema/p"
@@ -16,8 +16,9 @@
 
 
 	<mvc:annotation-driven />
-	
-	<bean class="org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator">
+
+	<bean
+		class="org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator">
 	</bean>
 
 	<bean
@@ -41,9 +42,20 @@
 		class="org.springframework.jdbc.core.JdbcTemplate">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
-	<!-- <bean id="empDao" class="com.cognizant.empmgmt.dao.EmployeeDAOImpl"> 
-		<property name="jdbcTemplate" ref="template"/> </bean> <bean id="errorDao" 
-		class="com.cognizant.empmgmt.dao.ErrorTableDAOImpl"> <property name="jdbcTemplate" 
-		ref="template"/> </bean> -->
+
+
+
+	<bean id="jaxb2Marshaller"
+		class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+		<property name="schema"
+			value="classpath:xsd/EmployeeSchema.xsd" />
+		<property name="classesToBeBound">
+			<list>
+				<value>com.cognizant.empmgmt.model.EmployeeXML</value>
+			</list>
+		</property>
+	</bean>
+
+
 
 </beans>

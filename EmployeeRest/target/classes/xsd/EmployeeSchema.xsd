@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<xs:complexType name="employeeType">
+		<xs:sequence>
+			<xs:element name="empId">
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="1000" />
+						<xs:maxInclusive value="9999" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="empName">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="5" />
+						<xs:maxLength value="30" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element type="xs:dateTime" name="joiningDate" />
+			<xs:element name="department">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="hr" />
+						<xs:enumeration value="fin" />
+						<xs:enumeration value="it" />
+						<xs:enumeration value="operations" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="resultType">
+		<xs:sequence>
+			<xs:element type="xs:string" name="status" />
+			<xs:element type="xs:string" name="desc" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="EMPXML">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element name="employee" type="employeeType" />
+				<xs:element name="result" type="resultType" />
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

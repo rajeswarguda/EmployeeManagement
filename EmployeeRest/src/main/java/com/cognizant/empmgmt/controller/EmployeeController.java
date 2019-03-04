@@ -1,12 +1,17 @@
 package com.cognizant.empmgmt.controller;
 
+import java.io.StringReader;
+
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.transform.Source;
+import javax.xml.transform.stream.StreamSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,8 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cognizant.empmgmt.dto.EmployeeDTO;
 import com.cognizant.empmgmt.manager.EmployeeManager;
-import com.cognizant.empmgmt.model.EmployeeRequest;
-import com.cognizant.empmgmt.model.EmployeeResponse;
+import com.cognizant.empmgmt.model.EmployeeXML;
+import com.cognizant.empmgmt.model.Result;
 
 @RestController
 @RequestMapping("EmpService")
@@ -24,33 +29,42 @@ public class EmployeeController {
 	
 	@Autowired
 	private EmployeeManager manager;
+	@Autowired
+	private Jaxb2Marshaller jaxb2Mashaller;
+	
 	private static final Logger LOG = LoggerFactory.getLogger(EmployeeController.class);
 
 	@RequestMapping(value="/emp/create", method=RequestMethod.POST,consumes={"application/xml"})
 	@ResponseBody
-	public ResponseEntity<EmployeeResponse> createOrUpdateEmployee(@RequestBody EmployeeRequest empRequest,HttpServletResponse response) {
+	public ResponseEntity<EmployeeXML> createOrUpdateEmployee(@RequestBody String body,HttpServletResponse response) {
 		
+		Source source = new StreamSource(new StringReader(body));
+	    EmployeeXML empRequest = (EmployeeXML) jaxb2Mashaller.unmarshal(source);
+	    
 		LOG.debug("empRequest="+empRequest);
 		
 		EmployeeDTO empDto = new EmployeeDTO();
-		empDto.setEmpId(empRequest.getEmpId());
-		empDto.setEmpName(empRequest.getEmpName());
-		empDto.setJoiningDate(empRequest.getJoiningDate());
-		empDto.setDepartment(empRequest.getDepartment());
+		empDto.setEmpId(empRequest.getEmployee().getEmpId());
+		empDto.setEmpName(empRequest.getEmployee().getEmpName());
+		empDto.setJoiningDate(empRequest.getEmployee().getJoiningDate());
+		empDto.setDepartment(empRequest.getEmployee().getDepartment());
 		
 		LOG.debug("createOrUpdateEmployee: empRequest="+empRequest);
 		
 		int rows = manager.createOrUpdateEmployee(empDto);
-		EmployeeResponse empResponse = new EmployeeResponse();
+		EmployeeXML empResponse = new EmployeeXML();
+		Result result = new Result();
 		if (rows > 0) {
-			empResponse.setStatus("SUCCESS");
-			empResponse.setDesc("Employee is added/updated successfully");
+			result.setStatus("SUCCESS");
+			result.setDesc("Employee is added/updated successfully");
 		} else {
-			empResponse.setStatus("FAILURE");
-			empResponse.setDesc("Employee is not added/updated successfully");
+			result.setStatus("FAILURE");
+			result.setDesc("Employee is not added/updated successfully");
 		}
 		
-		return new ResponseEntity<EmployeeResponse>(empResponse, HttpStatus.ACCEPTED);
+		empResponse.setResult(result);
+		
+		return new ResponseEntity<EmployeeXML>(empResponse, HttpStatus.ACCEPTED);
 		
 	}
 	

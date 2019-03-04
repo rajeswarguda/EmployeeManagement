@@ -27,7 +27,7 @@ public class AuditAdvice {
 		long executionTime = System.currentTimeMillis() - start;
 		LOG.debug(signature +" method executionTime="+executionTime);
 
-		if(signature.equals("ResponseEntity com.cognizant.empmgmt.controller.EmployeeController.createOrUpdateEmployee(EmployeeRequest,HttpServletResponse)")) {
+		if(signature.equals("ResponseEntity com.cognizant.empmgmt.controller.EmployeeController.createOrUpdateEmployee(String,HttpServletResponse)")) {
 			HttpServletResponse res = (HttpServletResponse) pjp.getArgs()[1];
 			res.addHeader("ExecutionTime", executionTime+"");
 		}

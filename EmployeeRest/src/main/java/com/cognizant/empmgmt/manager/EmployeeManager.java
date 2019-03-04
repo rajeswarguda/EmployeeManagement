@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cognizant.empmgmt.controller.EmpUpdationException;
 import com.cognizant.empmgmt.dao.EmployeeDAO;
 import com.cognizant.empmgmt.dto.EmployeeDTO;
 
@@ -36,7 +37,7 @@ public class EmployeeManager {
 			if(timeDifHours >=24) {
 				noOfRows=empDao.update(empDto);
 			}else {
-				throw new RuntimeException("Employee shold not be updated int 24 hours");
+				throw new EmpUpdationException("Employee shuold not be updated in 24 hours");
 			}
 			
 		} else {
