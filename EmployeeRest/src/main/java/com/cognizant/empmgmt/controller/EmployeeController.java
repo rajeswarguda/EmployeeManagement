@@ -36,16 +36,23 @@ public class EmployeeController {
 
 	private static final Logger LOG = LoggerFactory.getLogger(EmployeeController.class);
 
-	@RequestMapping(value="/emp/create", method=RequestMethod.POST,consumes={"application/xml"})
+	@RequestMapping(value = "/emp/create", method = RequestMethod.POST, consumes = { "application/xml" })
 	@ResponseBody
-	public ResponseEntity<EmployeeXML> createOrUpdateEmployee(@RequestBody String body,HttpServletResponse response, WebRequest webRequest) {
+	public ResponseEntity<EmployeeXML> createOrUpdateEmployee(@RequestBody String body, HttpServletResponse response,
+			WebRequest webRequest) {
 
+		LOG.info("Inside EmployeeController. Processing request.. ");
+		if (body == null || body.length() <= 0) {
+			throw new RuntimeException("Payload is empty");
+		}
+		LOG.debug("Recieved Payload:" + body);
 		webRequest.setAttribute("ReqPayload", body, RequestAttributes.SCOPE_REQUEST);
 
+		LOG.info("Validating payload..");
 		Source source = new StreamSource(new StringReader(body));
 		EmployeeXML empRequest = (EmployeeXML) jaxb2Mashaller.unmarshal(source);
 
-		LOG.debug("empRequest="+empRequest);
+		LOG.debug("empRequest=" + empRequest);
 
 		EmployeeDTO empDto = new EmployeeDTO();
 		empDto.setEmpId(empRequest.getEmployee().getEmpId());
@@ -53,11 +60,12 @@ public class EmployeeController {
 		empDto.setJoiningDate(empRequest.getEmployee().getJoiningDate());
 		empDto.setDepartment(empRequest.getEmployee().getDepartment());
 
-		LOG.debug("createOrUpdateEmployee: empRequest="+empRequest);
+		LOG.debug("empRequest=" + empRequest);
 
 		int rows = manager.createOrUpdateEmployee(empDto);
 		EmployeeXML empResponse = new EmployeeXML();
 		Result result = new Result();
+		LOG.debug("result=" + result);
 		if (rows > 0) {
 			result.setStatus("SUCCESS");
 			result.setDesc("Employee is added/updated successfully");
@@ -67,8 +75,8 @@ public class EmployeeController {
 		}
 
 		empResponse.setResult(result);
-
-		return new ResponseEntity<EmployeeXML>(empResponse, HttpStatus.ACCEPTED);
+		LOG.debug("Final response:" + empResponse);
+		return new ResponseEntity<EmployeeXML>(empResponse, HttpStatus.OK);
 
 	}
 

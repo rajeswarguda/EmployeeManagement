@@ -12,27 +12,27 @@ import org.springframework.stereotype.Component;
 @Component
 @Aspect
 public class AuditAdvice {
-	
+
 	private static final Logger LOG = LoggerFactory.getLogger(AuditAdvice.class);
 
-	@Around("execution(* com.cognizant.empmgmt..*.*(..))")  
-	public Object myadvice(ProceedingJoinPoint pjp) throws Throwable   
-	{  
-		LOG.debug("AuditAdvice: START");
+	@Around("execution(* com.cognizant.empmgmt..*.*(..))")
+	public Object myadvice(ProceedingJoinPoint pjp) throws Throwable {
+		LOG.info("Inside AuditAdvice..");
 
 		String signature = pjp.getSignature().toString();
 
 		long start = System.currentTimeMillis();
-		Object obj=  pjp.proceed(); 
+		Object obj = pjp.proceed();
 		long executionTime = System.currentTimeMillis() - start;
-		LOG.debug(signature +" method executionTime="+executionTime);
+		LOG.debug(signature + " method executionTime=" + executionTime);
 
-		if(signature.equals("ResponseEntity com.cognizant.empmgmt.controller.EmployeeController.createOrUpdateEmployee(String,HttpServletResponse)")) {
+		if (signature.equals(
+				"ResponseEntity com.cognizant.empmgmt.controller.EmployeeController.createOrUpdateEmployee(String,HttpServletResponse)")) {
 			HttpServletResponse res = (HttpServletResponse) pjp.getArgs()[1];
-			res.addHeader("ExecutionTime", executionTime+"");
+			res.addHeader("ExecutionTime", executionTime + "");
 		}
 
-		return obj;  
-	}  
+		return obj;
+	}
 
 }

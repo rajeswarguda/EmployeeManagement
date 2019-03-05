@@ -10,6 +10,17 @@ public class ErrorTableDTO implements Serializable{
 	private String errorDesc; 
 	private String requestXML;
 	
+	public ErrorTableDTO() {
+		super();
+	}
+
+	public ErrorTableDTO(int errorCode, String errorDesc, String requestXML) {
+		super();
+		this.errorCode = errorCode;
+		this.errorDesc = errorDesc;
+		this.requestXML = requestXML;
+	}
+	
 	public int getErrorCode() {
 		return errorCode;
 	}

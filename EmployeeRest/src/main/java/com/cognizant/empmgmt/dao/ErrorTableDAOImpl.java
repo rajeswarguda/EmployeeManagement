@@ -8,22 +8,22 @@ import org.springframework.stereotype.Repository;
 import com.cognizant.empmgmt.dto.ErrorTableDTO;
 
 @Repository
-public class ErrorTableDAOImpl implements ErrorTableDAO{
-	
-	private static final String INSERT_ERROR_DETAILS="INSERT INTO ErrorTab VALUES(?,?,?,SYSDATE)";
-	@Autowired
-    @Qualifier("template")
-	private JdbcTemplate jdbcTemplate;  
+public class ErrorTableDAOImpl implements ErrorTableDAO {
 
-	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {  
-		this.jdbcTemplate = jdbcTemplate;  
-	}  
-	
+	private static final String INSERT_ERROR_DETAILS = "INSERT INTO ErrorTab VALUES(?,?,?,SYSDATE)";
+	@Autowired
+	@Qualifier("template")
+	private JdbcTemplate jdbcTemplate;
+
+	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
+	}
+
 	@Override
 	public int insert(ErrorTableDTO errorDTO) {
-		int result = jdbcTemplate.update(INSERT_ERROR_DETAILS, errorDTO.getErrorCode(), errorDTO.getErrorDesc(),errorDTO.getRequestXML());  
+		int result = jdbcTemplate.update(INSERT_ERROR_DETAILS, errorDTO.getErrorCode(), errorDTO.getErrorDesc(),
+				errorDTO.getRequestXML());
 		return result;
 	}
 
-	
 }

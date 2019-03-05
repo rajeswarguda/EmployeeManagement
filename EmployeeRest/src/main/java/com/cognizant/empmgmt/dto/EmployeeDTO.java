@@ -13,6 +13,19 @@ public class EmployeeDTO implements Serializable{
 	private Calendar joiningDate;
 	private String department;
 	private Calendar LastModifidDate;
+	
+	public EmployeeDTO() {
+		super();
+	}
+	
+	public EmployeeDTO(int empId, String empName, Calendar joiningDate, String department, Calendar lastModifidDate) {
+		super();
+		this.empId = empId;
+		this.empName = empName;
+		this.joiningDate = joiningDate;
+		this.department = department;
+		LastModifidDate = lastModifidDate;
+	}
 	public int getEmpId() {
 		return empId;
 	}
