@@ -1,4 +1,1 @@
 com\cognizant\empmgmt\controller\EmployeeControllerTest.class
-com\cognizant\empmgmt\dao\EmployeeDAOImplTest.class
-com\cognizant\empmgmt\manager\EmployeeManagerImplTest.class
-com\cognizant\empmgmt\dao\ErrorTableDAOImplTest.class
