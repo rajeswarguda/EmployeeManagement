@@ -9,7 +9,7 @@ public class EmployeeDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private int empId;
-	private String empName;
+	private String empName; 
 	private Calendar joiningDate;
 	private String department;
 	private Calendar LastModifidDate;

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EMPXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="EmployeeSchema.xsd">
+  <employee>
+    <empId>1234</empId>
+    <empName>empName</empName>
+    <joiningDate>2001-12-31T12:00:00</joiningDate>
+    <department>hr</department>
+  </employee>
+</EMPXML>

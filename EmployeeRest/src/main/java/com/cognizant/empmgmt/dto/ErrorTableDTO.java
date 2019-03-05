@@ -7,7 +7,8 @@ public class ErrorTableDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private int errorCode;
-	private String errorDesc;
+	private String errorDesc; 
+	private String requestXML;
 	
 	public int getErrorCode() {
 		return errorCode;
@@ -21,7 +22,12 @@ public class ErrorTableDTO implements Serializable{
 	public void setErrorDesc(String errorDesc) {
 		this.errorDesc = errorDesc;
 	}
-	
+	public String getRequestXML() {
+		return requestXML;
+	}
+	public void setRequestXML(String requestXML) {
+		this.requestXML = requestXML;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -29,8 +35,12 @@ public class ErrorTableDTO implements Serializable{
 		builder.append(errorCode);
 		builder.append(", errorDesc=");
 		builder.append(errorDesc);
+		builder.append(", requestXML=");
+		builder.append(requestXML);
 		builder.append("]");
 		return builder.toString();
 	}
+	
+	
 	
 }

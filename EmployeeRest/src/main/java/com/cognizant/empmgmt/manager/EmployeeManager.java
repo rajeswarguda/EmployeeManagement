@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cognizant.empmgmt.controller.EmpUpdationException;
+import com.cognizant.empmgmt.exception.EmpUpdationException;
 import com.cognizant.empmgmt.dao.EmployeeDAO;
 import com.cognizant.empmgmt.dto.EmployeeDTO;
 

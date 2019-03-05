@@ -9,6 +9,6 @@ public interface EmployeeDAO {
 	public int insert(EmployeeDTO empdto);
 	public int update(EmployeeDTO empdto);
 	public EmployeeDTO getEmployee(int empId);
-	public List<EmployeeDTO> getAllEmployees();
+	public List<EmployeeDTO> getAllEmployees(); 
 
 }

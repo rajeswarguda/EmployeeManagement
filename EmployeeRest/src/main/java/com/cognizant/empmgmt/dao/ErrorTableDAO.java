@@ -4,6 +4,6 @@ import com.cognizant.empmgmt.dto.ErrorTableDTO;
 
 public interface ErrorTableDAO {
 
-	public int insert(ErrorTableDTO empdto);
+	public int insert(ErrorTableDTO errorDTO);
 	
 }
